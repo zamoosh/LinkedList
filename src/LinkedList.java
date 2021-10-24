@@ -22,4 +22,14 @@ public class LinkedList {
             last = node;
         }
     }
+
+    public void addFirst(int item) {
+        var node = new Node(item);
+        if (first == null)
+            first = last = node;
+        else {
+            node.next = first;
+            first = node;
+        }
+    }
 }
