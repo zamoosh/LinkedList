@@ -15,27 +15,17 @@ public class LinkedList<T> {
     private Node head;
     private Integer size = 0;
 
-    public void add(T item, int index) {
-        this.addLast(null);
-        if (index < 0 || index > size - 1)
-            throw new ArrayIndexOutOfBoundsException();
-        if (index == 0) {
-            this.addFirst(item);
-            return;
+    public Boolean add(T item, int index) {
+        this.addFirst(null);
+        var first = this.tail;
+        var next = this.getNext(first);
+        for (int i = 0; i < index; i++) {
+            first.value = next.value;
+            first = this.getNext(first);
+            next = this.getNext(next);
         }
-        if (index == this.size - 1) {
-            this.addLast(item);
-            return;
-        }
-        var previous = this.getPrevious(head);
-        var current = this.head;
-        for (int i = size - 1; i > index; i--) {
-            current.value = previous.value;
-            previous = this.getPrevious(previous);
-            current = this.getPrevious(current);
-        }
-        previous.next.value = item;
-        this.size += 1;
+        this.getPrevious(next).value = item;
+        return true;
     }
 
     public void addLast(T item) {
@@ -99,6 +89,11 @@ public class LinkedList<T> {
         }
         return null;
     }
+
+    private Node getNext(Node node) {
+        return node.next;
+    }
+
 
     public Integer size() {
         return this.size;
