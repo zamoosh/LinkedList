@@ -78,7 +78,7 @@ public class LinkedList<T> {
             next = this.getNext(next);
         }
         first.value = next.value;
-        this.removeLast();
+        this.removeFirst();
     }
 
 
