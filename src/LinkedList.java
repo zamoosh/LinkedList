@@ -70,6 +70,18 @@ public class LinkedList<T> {
         return false;
     }
 
+    public void remove(int index) {
+        var first = this.tail;
+        var next = this.getNext(first);
+        for (int i = 0; i < index; i++) {
+            first = this.getNext(first);
+            next = this.getNext(next);
+        }
+        first.value = next.value;
+        this.removeLast();
+    }
+
+
     public void removeFirst() {
         tail = tail.next;
         this.size -= 1;
