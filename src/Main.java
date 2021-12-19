@@ -5,8 +5,7 @@ public class Main {
         inputList.addLast("mohammad");
         inputList.addLast("ali");
         inputList.addLast("sina");
-        inputList.addFirst("mahdi");
-        inputList.addFirst("javad");
+        inputList.add("j", 2);
         System.out.println(inputList);
     }
 }

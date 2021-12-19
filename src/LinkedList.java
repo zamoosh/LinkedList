@@ -3,29 +3,47 @@ import java.util.Arrays;
 public class LinkedList<T> {
     private class Node {
 
+        private Integer index;
         private T value;
         private Node next;
 
         private Node(T item) {
             value = item;
+            index = pointer++;
+        }
+
+        public Node(T item, Integer nodeIndex) {
+            this(item);
+            index = nodeIndex;
+        }
+
+        @Override
+        public String toString() {
+            if (this.value != null)
+                return this.value.toString();
+            return null;
         }
     }
 
+    private Integer pointer = 0;
     private Node tail;
     private Node head;
     private Integer size = 0;
 
-    public Boolean add(T item, int index) {
-        this.addFirst(null);
-        var first = this.tail;
-        var next = this.getNext(first);
-        for (int i = 0; i < index; i++) {
-            first.value = next.value;
-            first = this.getNext(first);
-            next = this.getNext(next);
+    public void add(T item, Integer index) {
+        if (index == 0) addFirst(item);
+        else if (index.equals(size)) addLast(item);
+        var temp = this.getNode(index);
+        var nodeIndex = temp.index;
+        var current = this.getNode(index - 1);
+        current.next = new Node(item, nodeIndex);
+        current.next.next = temp;
+        current = current.next.next;
+        while (current != null) {
+            current.index += 1;
+            current = current.next;
         }
-        this.getPrevious(next).value = item;
-        return true;
+        this.size += 1;
     }
 
     public void addLast(T item) {
@@ -104,6 +122,15 @@ public class LinkedList<T> {
 
     private Node getNext(Node node) {
         return node.next;
+    }
+
+    public Node getNode(Integer index) {
+        var current = this.tail;
+        while (current != null) {
+            if (current.index.equals(index)) return current;
+            current = current.next;
+        }
+        return null;
     }
 
 
